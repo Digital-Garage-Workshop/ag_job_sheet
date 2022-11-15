@@ -1,16 +1,17 @@
 //
 import { Input, Sheet, Table, TableHeader } from "lib/components";
-import Image from "next/image";
 
 //
+import { PDFGenerator } from "./pdf_generator";
 
 const HomePage = async () => {
   return (
-    <main className="mx-auto max-w-min py-10">
-      <div id="job-sheet" className="flex flex-col gap-y-10">
+    <main className="mx-auto max-w-min pt-10 pb-20">
+      <div id="job_sheet" className="flex flex-col gap-y-0">
         <FirstPage />
         <SecondPage />
       </div>
+      <PDFGenerator />
     </main>
   );
 };
@@ -18,11 +19,12 @@ export default HomePage;
 
 const FirstPage: React.FC = () => {
   return (
-    <Sheet>
+    <Sheet id="first_page">
       <Table>
         <tr>
           <th colSpan={6}>
-            <Input label="АЖЛЫН ХУУДАС No:" />
+            АЖЛЫН ХУУДАС No:
+            {/* <Input label="АЖЛЫН ХУУДАС No:" /> */}
           </th>
           <td colSpan={6}></td>
         </tr>
@@ -108,8 +110,9 @@ const FirstPage: React.FC = () => {
         </TableHeader>
         <tr>
           <td colSpan={5} rowSpan={10}>
-            <div className="flex justify-center items-center">
-              <Image src="/assets/mkmkmk.png" width={300} height={200} alt="" />
+            <div className="flex items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/assets/mkmkmk.png" alt="" />
             </div>
           </td>
         </tr>
@@ -123,9 +126,11 @@ const FirstPage: React.FC = () => {
             </td>
           </tr>
         ))}
-        <TableHeader>
-          <th colSpan={7}>Автомашин хүлээлгэн өгсөн</th>
-        </TableHeader>
+        <tr>
+          <th colSpan={7} className="bg-gray-300">
+            Автомашин хүлээлгэн өгсөн
+          </th>
+        </tr>
         <tr>
           <th colSpan={7}>Хүлээн авсан зөвлөх:</th>
         </tr>
@@ -185,7 +190,7 @@ const FirstPage: React.FC = () => {
         </TableHeader>
         <tr>
           <td colSpan={12}>
-            <ol className="text-[10px] px-2.5">
+            <ol className="px-2.5 text-[10px]">
               {[
                 `1. Та автомашиндаа үнэт эдлэл болон хувийн эд зүйлс, бусад чухал бичиг баримтаа үлдээхгүй байхыг хүсэж байна. Алдагдсан тохиолдолд "Трү даззл" ХХК хариуцлага хүлээхгүй болно.`,
                 `2. Та энэхүү хуудсан дээр гарын үсэг зурснаар автомашиныг шалгаж үзэх, туршилтын жолоодлого хийх эрхийг "Трү Даззл" ХХК-д итгэмжлэн хүлээлгэж байна.`,
@@ -204,7 +209,7 @@ const FirstPage: React.FC = () => {
 };
 const SecondPage: React.FC = () => {
   return (
-    <Sheet>
+    <Sheet id="second_page">
       <Table>
         {/* Автомашины ерөнхий үзлэгийн мэдээлэл */}
         <TableHeader>
@@ -250,12 +255,12 @@ const SecondPage: React.FC = () => {
           <tr key={index}>
             <th colSpan={4}>{item}</th>
             <td colSpan={2}>
-              <div className="flex justify-center items-center">
+              <div className="flex items-center justify-center">
                 <input type="checkbox" />
               </div>
             </td>
             <td colSpan={2}>
-              <div className="flex justify-center items-center">
+              <div className="flex items-center justify-center">
                 <input type="checkbox" />
               </div>
             </td>

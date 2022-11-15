@@ -1,9 +1,12 @@
 import { A4 } from "./a4";
 
-export const Sheet: React.FCC = ({ children }) => {
+interface ISheet {
+  id?: string;
+}
+export const Sheet: React.FCC<ISheet> = ({ children, id }) => {
   return (
     <A4>
-      <div className="flex flex-col p-10 gap-y-5">
+      <div className="flex flex-col gap-y-2.5 p-10" id={id}>
         <SheetHeader />
         {children}
       </div>
