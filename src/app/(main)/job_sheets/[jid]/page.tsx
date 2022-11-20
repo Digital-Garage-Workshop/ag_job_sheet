@@ -27,7 +27,7 @@ const HomePage = async ({ params }: { params: { jid: string } }) => {
         <FirstPage data={body} />
         <SecondPage data={body} />
       </div>
-      <PDFGenerator />
+      <PDFGenerator filename={`job_sheet_#${jid}`} />
     </main>
   );
 };
