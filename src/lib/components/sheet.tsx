@@ -29,9 +29,7 @@ const SheetHeader: React.FC<SheetHeader> = ({ organization }) => {
   const [logo, setLogo] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchImage(
-      "https://upload.wikimedia.org/wikipedia/commons/a/a1/Johnrogershousemay2020.webp"
-    ).then((blob) => {
+    fetchImage(organization.logo).then((blob) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         if (typeof reader.result === "string") {

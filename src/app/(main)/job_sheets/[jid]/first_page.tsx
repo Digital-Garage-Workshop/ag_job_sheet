@@ -7,26 +7,6 @@ interface IFirstPage {
 }
 export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
   const createdAt = new Date(data.created_at);
-  const _startAt = data.bookings.filter(({ rstart_time }) => rstart_time);
-  const startAt =
-    _startAt.length === data.bookings.length
-      ? new Date(
-          _startAt
-            .map(({ rstart_time }) => rstart_time)
-            .sort()
-            .find((item) => item)!
-        )
-      : null;
-  const _endAt = data.bookings.filter(({ rend_time }) => rend_time);
-  const endAt =
-    _startAt.length === data.bookings.length
-      ? new Date(
-          _endAt
-            .map(({ rend_time }) => rend_time)
-            .sort()
-            .find((item) => item)!
-        )
-      : null;
 
   return (
     <Sheet id="first_page" organization={data.organization}>
@@ -68,18 +48,7 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         </tr>
         <tr>
           <th colSpan={5}>Засвар үйлчилгээнд орсон огноо</th>
-          {(startAt
-            ? [
-                startAt.getFullYear(),
-                startAt.getMonth(),
-                startAt.getDate(),
-                startAt.getHours(),
-                startAt.getMinutes(),
-                "",
-                "",
-              ]
-            : Array.from(Array(7))
-          ).map((value, index) => (
+          {Array.from(Array(7)).map((value, index) => (
             <td key={`${index}-${index}`}>
               {index < 5 && <div className="px-2.5">{value}</div>}
             </td>
@@ -87,18 +56,7 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         </tr>
         <tr>
           <th colSpan={5}>Засвар үйлчилгээ дууссан огноо</th>
-          {(endAt
-            ? [
-                endAt.getFullYear(),
-                endAt.getMonth(),
-                endAt.getDate(),
-                endAt.getHours(),
-                endAt.getMinutes(),
-                "",
-                "",
-              ]
-            : Array.from(Array(7))
-          ).map((value, index) => (
+          {Array.from(Array(7)).map((value, index) => (
             <td key={`${index}-${index}`}>
               {index < 5 && <div className="px-2.5">{value}</div>}
             </td>
@@ -260,7 +218,9 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         {Array.from(Array(6)).map((_, index) => (
           <tr key={index}>
             <td colSpan={12}>
-              <div className="px-2.5">{data.bookings[index]?.rnote}</div>
+              <div className="px-2.5">
+                {data.bookings.filter((booking) => booking.rnote)[index]?.rnote}
+              </div>
             </td>
           </tr>
         ))}
@@ -291,7 +251,7 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         {Array.from(Array(6)).map((_, index) => (
           <tr key={index}>
             <td colSpan={12}>
-              <div className="px-2.5">{data.bookings[index]?.comment}</div>
+              <div className="px-2.5">{data.bookings.filter(booking=> booking.comment)[index]?.comment}</div>
             </td>
           </tr>
         ))}
