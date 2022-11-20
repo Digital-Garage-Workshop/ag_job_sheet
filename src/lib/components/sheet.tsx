@@ -48,7 +48,7 @@ const SheetHeader: React.FC<SheetHeader> = ({ organization }) => {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         {logo && <img src={logo} alt="logo" />}
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col text-sm">
         <div>{organization.name}</div>
         <div>{organization.address}</div>
         <div>{`Утас: ${organization.phone}, И-мэйл: ${organization.email}`}</div>
