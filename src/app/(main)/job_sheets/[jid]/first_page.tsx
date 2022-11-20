@@ -6,6 +6,28 @@ interface IFirstPage {
   data: JobSheet;
 }
 export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
+  const createdAt = new Date(data.created_at);
+  const _startAt = data.bookings.filter(({ rstart_time }) => rstart_time);
+  const startAt =
+    _startAt.length === data.bookings.length
+      ? new Date(
+          _startAt
+            .map(({ rstart_time }) => rstart_time)
+            .sort()
+            .find((item) => item)!
+        )
+      : null;
+  const _endAt = data.bookings.filter(({ rend_time }) => rend_time);
+  const endAt =
+    _startAt.length === data.bookings.length
+      ? new Date(
+          _endAt
+            .map(({ rend_time }) => rend_time)
+            .sort()
+            .find((item) => item)!
+        )
+      : null;
+
   return (
     <Sheet id="first_page" organization={data.organization}>
       <Table>
@@ -31,11 +53,11 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         <tr>
           <th colSpan={5}>Захиалга өгсөн огноо</th>
           {[
-            new Date(data.created_at).getFullYear(),
-            new Date(data.created_at).getMonth(),
-            new Date(data.created_at).getDate(),
-            new Date(data.created_at).getHours(),
-            new Date(data.created_at).getMinutes(),
+            createdAt.getFullYear(),
+            createdAt.getMonth(),
+            createdAt.getDate(),
+            createdAt.getHours(),
+            createdAt.getMinutes(),
             "",
             "",
           ].map((value, index) => (
@@ -46,7 +68,18 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         </tr>
         <tr>
           <th colSpan={5}>Засвар үйлчилгээнд орсон огноо</th>
-          {Array.from(Array(7)).map((value, index) => (
+          {(startAt
+            ? [
+                startAt.getFullYear(),
+                startAt.getMonth(),
+                startAt.getDate(),
+                startAt.getHours(),
+                startAt.getMinutes(),
+                "",
+                "",
+              ]
+            : Array.from(Array(7))
+          ).map((value, index) => (
             <td key={`${index}-${index}`}>
               {index < 5 && <div className="px-2.5">{value}</div>}
             </td>
@@ -54,7 +87,18 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         </tr>
         <tr>
           <th colSpan={5}>Засвар үйлчилгээ дууссан огноо</th>
-          {Array.from(Array(7)).map((value, index) => (
+          {(endAt
+            ? [
+                endAt.getFullYear(),
+                endAt.getMonth(),
+                endAt.getDate(),
+                endAt.getHours(),
+                endAt.getMinutes(),
+                "",
+                "",
+              ]
+            : Array.from(Array(7))
+          ).map((value, index) => (
             <td key={`${index}-${index}`}>
               {index < 5 && <div className="px-2.5">{value}</div>}
             </td>
@@ -128,6 +172,29 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
             </tr>
           ))
         )}
+        <tr>
+          <td colSpan={12}>
+            <div className="px-2.5">
+              {data.bookings
+                .map(
+                  ({ categoryservice, service }) =>
+                    `${service.category.name} ${
+                      categoryservice?.name ? `: ${categoryservice.name}` : ""
+                    }`
+                )
+                .join(", ")}
+            </div>
+          </td>
+        </tr>
+        {/* {data.bookings.map(({ categoryservice, service }, index) => (
+          <tr key={index}>
+            <td colSpan={12}>
+              <div className="px-2.5">{`${service.category.name}: ${
+                categoryservice?.name ?? ""
+              }`}</div>
+            </td>
+          </tr>
+        ))} */}
         {/* Автомашины бүрэн бүтэн байдал */}
         <TableHeader>
           <th colSpan={5}>Автомашины бүрэн бүтэн байдал</th>
@@ -144,7 +211,9 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         <tr>
           <th colSpan={7}>
             {`Автомашины гүйлт: `}
-            <span className="font-normal">{`${data.kilometr}км`}</span>
+            {data.kilometr && (
+              <span className="font-normal">{`${data.kilometr}км`}</span>
+            )}
           </th>
         </tr>
         {Array.from(Array(5)).map((_, index) => (
@@ -201,7 +270,9 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
           </td>
           <th colSpan={6}>
             {`Механикийн нэр: `}
-            <span className="font-normal">{}</span>
+            <span className="font-normal">
+              {data.bookings.map((booking) => booking.employee.name).join(", ")}
+            </span>
           </th>
         </tr>
         <tr>

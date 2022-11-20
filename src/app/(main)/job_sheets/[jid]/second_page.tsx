@@ -82,7 +82,12 @@ export const SecondPage: React.FC<ISecondPage> = ({ data }) => {
           <td colSpan={6}>
             <Input />
           </td>
-          <th colSpan={6}>Механикийн нэр:</th>
+          <th colSpan={6}>
+            {`Механикийн нэр: `}
+            <span className="font-normal">
+              {data.bookings.map((booking) => booking.employee.name).join(", ")}
+            </span>
+          </th>
         </tr>
         {/* Автомашин хүлээлгэн өгсөн тэмдэглэгээ */}
         <TableHeader>

@@ -35,8 +35,18 @@ export const Booking = z.object({
   created_at: iso8601Schema,
   updated_at: iso8601Schema,
   service: Service,
-  repair: z.string().nullable(),
-  categoryservice: z.string().nullable(),
+  repair: z
+    .object({
+      id: z.number(),
+      servicename: z.string(),
+    })
+    .nullable(),
+  categoryservice: z
+    .object({
+      id: z.number(),
+      name: z.string(),
+    })
+    .nullable(),
   employee: Employee,
   rnotes: z.string().array(),
 });
