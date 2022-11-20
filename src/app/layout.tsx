@@ -18,6 +18,7 @@ const RootLayout: React.FCC = ({ children }) => {
         integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
         crossOrigin="anonymous"
         referrerPolicy="no-referrer"
+        strategy="lazyOnload"
       />
     </html>
   );
