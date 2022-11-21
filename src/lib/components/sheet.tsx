@@ -44,7 +44,7 @@ const SheetHeader: React.FC<SheetHeader> = ({ organization }) => {
     <div className="flex items-center gap-x-5">
       <div className="aspect-square w-16">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        {logo && <img src={logo} alt="logo" />}
+        <img src={logo ? logo : organization.logo} alt="logo" />
       </div>
       <div className="flex flex-col text-sm">
         <div>{organization.name}</div>

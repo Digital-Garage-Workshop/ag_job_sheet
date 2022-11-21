@@ -6,6 +6,13 @@ interface ISecondPage {
   data: JobSheet;
 }
 export const SecondPage: React.FC<ISecondPage> = ({ data }) => {
+  const mechanics = data.bookings
+    .map((booking) => booking.employee)
+    .filter(
+      (employee, index, self) =>
+        index === self.findIndex((item) => item.id === employee.id)
+    );
+
   return (
     <Sheet id="second_page" organization={data.organization}>
       <Table>
@@ -85,7 +92,7 @@ export const SecondPage: React.FC<ISecondPage> = ({ data }) => {
           <th colSpan={6}>
             {`Механикийн нэр: `}
             <span className="font-normal">
-              {data.bookings.map((booking) => booking.employee.name).join(", ")}
+              {mechanics.map((employee) => employee.name).join(", ")}
             </span>
           </th>
         </tr>

@@ -7,6 +7,12 @@ interface IFirstPage {
 }
 export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
   const createdAt = new Date(data.created_at);
+  const mechanics = data.bookings
+    .map((booking) => booking.employee)
+    .filter(
+      (employee, index, self) =>
+        index === self.findIndex((item) => item.id === employee.id)
+    );
 
   return (
     <Sheet id="first_page" organization={data.organization}>
@@ -231,7 +237,7 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
           <th colSpan={6}>
             {`Механикийн нэр: `}
             <span className="font-normal">
-              {data.bookings.map((booking) => booking.employee.name).join(", ")}
+              {mechanics.map((employee) => employee.name).join(", ")}
             </span>
           </th>
         </tr>
@@ -251,7 +257,12 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         {Array.from(Array(6)).map((_, index) => (
           <tr key={index}>
             <td colSpan={12}>
-              <div className="px-2.5">{data.bookings.filter(booking=> booking.comment)[index]?.comment}</div>
+              <div className="px-2.5">
+                {
+                  data.bookings.filter((booking) => booking.comment)[index]
+                    ?.comment
+                }
+              </div>
             </td>
           </tr>
         ))}
