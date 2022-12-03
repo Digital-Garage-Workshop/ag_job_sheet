@@ -1,4 +1,7 @@
 //
+import dajys from "dayjs";
+
+//
 import { Input, Sheet, Table, TableHeader } from "lib/components";
 import { JobSheet } from "lib/services/schemas";
 
@@ -6,7 +9,10 @@ interface IFirstPage {
   data: JobSheet;
 }
 export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
-  const createdAt = new Date(data.created_at);
+  const createdAt = dajys(data.created_at);
+  const startedAt = dajys(data.rstart_time);
+  const endedAt = dajys(data.rend_time);
+
   const mechanics = data.bookings
     .map((booking) => booking.employee)
     .filter(
@@ -39,11 +45,11 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         <tr>
           <th colSpan={5}>Захиалга өгсөн огноо</th>
           {[
-            createdAt.getFullYear(),
-            createdAt.getMonth(),
-            createdAt.getDate(),
-            createdAt.getHours(),
-            createdAt.getMinutes(),
+            createdAt.year(),
+            createdAt.month() + 1,
+            createdAt.date(),
+            createdAt.hour(),
+            createdAt.minute(),
             "",
             "",
           ].map((value, index) => (
@@ -54,7 +60,15 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         </tr>
         <tr>
           <th colSpan={5}>Засвар үйлчилгээнд орсон огноо</th>
-          {Array.from(Array(7)).map((value, index) => (
+          {[
+            startedAt.year(),
+            startedAt.month() + 1,
+            startedAt.date(),
+            startedAt.hour(),
+            startedAt.minute(),
+            "",
+            "",
+          ].map((value, index) => (
             <td key={`${index}-${index}`}>
               {index < 5 && <div className="px-2.5">{value}</div>}
             </td>
@@ -62,7 +76,15 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         </tr>
         <tr>
           <th colSpan={5}>Засвар үйлчилгээ дууссан огноо</th>
-          {Array.from(Array(7)).map((value, index) => (
+          {[
+            endedAt.year(),
+            endedAt.month() + 1,
+            endedAt.date(),
+            endedAt.hour(),
+            endedAt.minute(),
+            "",
+            "",
+          ].map((value, index) => (
             <td key={`${index}-${index}`}>
               {index < 5 && <div className="px-2.5">{value}</div>}
             </td>

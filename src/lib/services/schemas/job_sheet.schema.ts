@@ -29,6 +29,8 @@ export const JobSheet = z.object({
   user_id: z.number(),
   bstatus: z.enum(["confirmed"]),
   rstatus: z.number(),
+  rstart_time: iso8601Schema.nullable(),
+  rend_time: iso8601Schema.nullable(),
   created_at: iso8601Schema,
   updated_at: iso8601Schema,
   organization: Organization,
