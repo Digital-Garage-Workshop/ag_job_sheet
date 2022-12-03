@@ -1,7 +1,7 @@
 "use client";
 
 //
-import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 
 //
 import { Organization } from "lib/services/schemas";
@@ -30,7 +30,7 @@ interface SheetHeader {
 }
 const SheetHeader: React.FC<SheetHeader> = ({ organization }) => {
   const key = organization.logo ?? null;
-  const { data } = useSWR(key, () => fetchLogo(organization.logo));
+  const { data } = useSWRImmutable(key, () => fetchLogo(organization.logo));
 
   return (
     <div className="flex items-center gap-x-5">
