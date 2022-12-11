@@ -15,10 +15,14 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
 }) => {
   const _generatePDF = useCallback(async () => {
     try {
-      const response = await fetch("/api/pdf", {
-        method: "POST",
-        body: JSON.stringify({ pageRanges, path }),
-      });
+      const response = await fetch(
+        "https://pdf-generator-4led.onrender.com/pdf",
+        {
+          method: "POST",
+          body: JSON.stringify({ pageRanges, path }),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       const pdf = await response.blob();
       const url = URL.createObjectURL(pdf);
       const a = document.createElement("a");
