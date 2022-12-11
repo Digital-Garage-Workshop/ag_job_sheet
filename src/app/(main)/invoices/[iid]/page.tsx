@@ -21,11 +21,15 @@ const InvoicePage = async ({ params }: { params: { iid: string } }) => {
   }
 
   return (
-    <main className="pt-10 pb-20">
+    <main>
       <div id="invoice" className="flex flex-col gap-y-0">
         <Invoice data={body} />
       </div>
-      <PDFGenerator elemendId="invoice" filename={`invoice_#${iid}`} />
+      <PDFGenerator
+        filename={`invoice_#${iid}`}
+        pageRanges="1"
+        path={`/invoices/${iid}`}
+      />
     </main>
   );
 };

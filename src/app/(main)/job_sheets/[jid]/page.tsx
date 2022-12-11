@@ -22,12 +22,16 @@ const JobSheetPage = async ({ params }: { params: { jid: string } }) => {
   }
 
   return (
-    <main className="pt-10 pb-20">
-      <div id="job_sheet" className="flex flex-col gap-y-0">
+    <main className="pb-20">
+      <div id="job_sheet" className="flex flex-col">
         <FirstPage data={body} />
         <SecondPage data={body} />
       </div>
-      <PDFGenerator elemendId="job_sheet" filename={`job_sheet_#${jid}`} />
+      <PDFGenerator
+        filename={`job_sheet_#${jid}`}
+        pageRanges="1-2"
+        path={`/job_sheets/${jid}`}
+      />
     </main>
   );
 };

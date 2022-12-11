@@ -3,24 +3,34 @@
 //
 import { useCallback } from "react";
 
-//
-import { generatePDF } from "lib/utils/generate_pdf";
-
 interface IPDFGenerator {
-  elemendId: string;
   filename?: string;
+  pageRanges?: string;
+  path: string;
 }
 export const PDFGenerator: React.FC<IPDFGenerator> = ({
-  elemendId,
-  filename,
+  filename = new Date().toISOString(),
+  pageRanges,
+  path,
 }) => {
-  const _generatePDF = useCallback(() => {
-    const element = document.getElementById(elemendId);
-
-    if (element) {
-      generatePDF(element, filename);
+  const _generatePDF = useCallback(async () => {
+    try {
+      const response = await fetch("/api/pdf", {
+        method: "POST",
+        body: JSON.stringify({ pageRanges, path }),
+      });
+      const pdf = await response.blob();
+      const url = URL.createObjectURL(pdf);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${filename}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (error) {
+      console.log(error);
     }
-  }, [elemendId, filename]);
+  }, [filename, pageRanges, path]);
 
   return (
     <div className="fixed left-0 right-0 bottom-0 bg-gray-400 px-10 py-2.5">

@@ -1,12 +1,8 @@
-"use client";
-
 //
 import type { HTMLAttributes } from "react";
-import useSWRImmutable from "swr/immutable";
 
 //
 import { Organization } from "lib/services/schemas";
-import { readFileAsync } from "lib/utils";
 
 //
 import { A4 } from "./a4";
@@ -17,7 +13,7 @@ interface ISheet extends HTMLAttributes<HTMLDivElement> {
 export const Sheet: React.FCC<ISheet> = ({ children, id, organization }) => {
   return (
     <A4>
-      <div className="flex flex-col gap-y-2.5 p-10" id={id}>
+      <div className="flex flex-col gap-y-2.5 p-10 pt-0" id={id}>
         <SheetHeader organization={organization} />
         {children}
       </div>
@@ -29,15 +25,12 @@ interface SheetHeader {
   organization: Organization;
 }
 const SheetHeader: React.FC<SheetHeader> = ({ organization }) => {
-  const key = organization.logo ?? null;
-  const { data } = useSWRImmutable(key, () => fetchLogo(organization.logo));
-
   return (
-    <div className="flex items-center gap-x-5">
+    <div className="mt-10 flex items-center gap-x-5">
       <div className="aspect-square w-16">
         {/* TODO: default logo */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        {typeof data === "string" && <img src={data} alt="logo" />}
+        <img src={organization.logo} alt="logo" />
       </div>
       <div className="flex flex-col text-sm">
         <div>{organization.name}</div>
@@ -46,11 +39,4 @@ const SheetHeader: React.FC<SheetHeader> = ({ organization }) => {
       </div>
     </div>
   );
-};
-const fetchLogo = async (url: string) => {
-  const response = await fetch(url);
-  const blob = await response.blob();
-  const logo = await readFileAsync(blob);
-
-  return logo;
 };
