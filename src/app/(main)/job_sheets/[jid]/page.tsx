@@ -7,7 +7,7 @@ import { tryParseInt } from "lib/utils";
 import { FirstPage } from "./first_page";
 import { SecondPage } from "./second_page";
 
-const HomePage = async ({ params }: { params: { jid: string } }) => {
+const JobSheetPage = async ({ params }: { params: { jid: string } }) => {
   const jid = tryParseInt(params.jid);
   if (typeof jid === "undefined" || isNaN(jid)) {
     return <div className="w-screen text-center">invalid job sheet id</div>;
@@ -27,8 +27,8 @@ const HomePage = async ({ params }: { params: { jid: string } }) => {
         <FirstPage data={body} />
         <SecondPage data={body} />
       </div>
-      <PDFGenerator filename={`job_sheet_#${jid}`} />
+      <PDFGenerator elemendId="job_sheet" filename={`job_sheet_#${jid}`} />
     </main>
   );
 };
-export default HomePage;
+export default JobSheetPage;

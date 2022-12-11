@@ -1,6 +1,7 @@
 "use client";
 
 //
+import type { HTMLAttributes } from "react";
 import useSWRImmutable from "swr/immutable";
 
 //
@@ -10,8 +11,7 @@ import { readFileAsync } from "lib/utils";
 //
 import { A4 } from "./a4";
 
-interface ISheet {
-  id?: string;
+interface ISheet extends HTMLAttributes<HTMLDivElement> {
   organization: Organization;
 }
 export const Sheet: React.FCC<ISheet> = ({ children, id, organization }) => {
