@@ -1,6 +1,10 @@
+import edgeChromium from "chrome-aws-lambda";
 import type { NextApiRequest, NextApiResponse } from "next";
 import playwright from "playwright";
 
+// https://gist.github.com/kettanaito/56861aff96e6debc575d522dd03e5725
+const LOCAL_CHROME_EXECUTABLE =
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   const method = request.method;
 
@@ -26,7 +30,9 @@ interface IOptions {
   path: string;
 }
 export const generatePDF2 = async ({ pageRanges, path }: IOptions) => {
-  const browser = await playwright.chromium.launch();
+  const executablePath =
+    (await edgeChromium.executablePath) || LOCAL_CHROME_EXECUTABLE;
+  const browser = await playwright.chromium.launch({ executablePath });
   const context = await browser.newContext();
   const page = await context.newPage();
   await page.goto(path, { waitUntil: "networkidle" });
