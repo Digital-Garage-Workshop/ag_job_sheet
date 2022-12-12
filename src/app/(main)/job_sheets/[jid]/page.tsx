@@ -18,7 +18,20 @@ const JobSheetPage = async ({ params }: { params: { jid: string } }) => {
   });
 
   if (status !== 200) {
-    return <div className="w-screen text-center">{JSON.stringify(body)}</div>;
+    switch (status) {
+      case 404:
+        return (
+          <div className="flex h-screen w-screen items-center justify-center">
+            <p>{`Not Found`}</p>
+          </div>
+        );
+      default:
+        return (
+          <div className="flex h-screen w-screen items-center justify-center">
+            <p>{JSON.stringify(body)}</p>
+          </div>
+        );
+    }
   }
 
   return (
