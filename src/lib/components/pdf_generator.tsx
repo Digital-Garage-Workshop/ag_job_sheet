@@ -44,7 +44,10 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
   }, [filename, pageRanges, path]);
 
   return (
-    <div className="fixed inset-0 h-screen w-screen">
+    <div
+      className="fixed inset-0 h-screen w-screen"
+      data-testid="pdf_generator"
+    >
       <div className="absolute left-0 right-0 bottom-0 bg-gray-400 px-10 py-2.5">
         <button className="btn" onClick={_generatePDF}>
           Хэвлэх
