@@ -44,15 +44,15 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
   }, [filename, pageRanges, path]);
 
   return (
-    <>
-      <div className="fixed left-0 right-0 bottom-0 bg-gray-400 px-10 py-2.5">
+    <div className="fixed inset-0 h-screen w-screen">
+      <div className="absolute left-0 right-0 bottom-0 bg-gray-400 px-10 py-2.5">
         <button className="btn" onClick={_generatePDF}>
           Хэвлэх
         </button>
       </div>
       <div
         className={classNames(
-          "fixed inset-0 flex h-screen w-screen items-center justify-center bg-black/50 duration-500",
+          "absolute inset-0 flex items-center justify-center bg-black/50 duration-500",
           !isGenerating && "invisible opacity-0"
         )}
       >
@@ -60,6 +60,6 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
           <DocumentChartBarIcon className="h-10 w-10 text-white" />
         </div>
       </div>
-    </>
+    </div>
   );
 };
