@@ -17,24 +17,15 @@ const InvoicePage = async ({ params }: { params: { iid: string } }) => {
   });
 
   if (status !== 200) {
-    switch (status) {
-      case 404:
-        return (
-          <div className="flex h-screen w-screen items-center justify-center">
-            <p>{`Not Found`}</p>
-          </div>
-        );
-      default:
-        return (
-          <div className="flex h-screen w-screen items-center justify-center">
-            <p>{JSON.stringify(body)}</p>
-          </div>
-        );
-    }
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <p>{status}</p>
+      </div>
+    );
   }
 
   return (
-    <main>
+    <main className="pb-20">
       <div id="invoice" className="flex flex-col gap-y-0">
         <Invoice data={body} />
       </div>

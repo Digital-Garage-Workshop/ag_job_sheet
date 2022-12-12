@@ -4,7 +4,6 @@ import { useEffect } from "react";
 
 const ErrorPage: React.FC<{ error: Error; reset: () => void }> = ({
   error,
-  reset,
 }) => {
   useEffect(() => {
     console.error(error);
@@ -16,5 +15,4 @@ const ErrorPage: React.FC<{ error: Error; reset: () => void }> = ({
     </div>
   );
 };
-
 export default ErrorPage;
