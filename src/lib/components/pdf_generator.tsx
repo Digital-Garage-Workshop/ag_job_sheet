@@ -5,6 +5,7 @@ import { DocumentChartBarIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState } from "react";
 //
 import { classNames } from "lib/utils";
+import { usePrintDialog } from "lib/zustand";
 
 interface IPDFGenerator {
   filename?: string;
@@ -43,14 +44,33 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
     }
   }, [filename, pageRanges, path]);
 
+  const isOpen = usePrintDialog((state) => state.isOpen);
+  const setIsOpen = usePrintDialog((state) => state.setIsOpen);
+
   return (
     <>
       <div
-        className="fixed left-0 right-0 bottom-0 bg-gray-400 px-10 py-2.5"
+        className={classNames(
+          "fixed left-0 right-0 bottom-0 flex gap-x-2.5 bg-gray-400 px-10 py-2.5",
+          isOpen && "invisible"
+        )}
         data-testid="pdf_generator"
       >
         <button className="btn" onClick={_generatePDF}>
-          Хэвлэх
+          {`Хэвлэх (Server)`}
+        </button>
+        <button
+          className="btn"
+          onClick={async () => {
+            setIsOpen(true);
+            setTimeout(() => {
+              window.print();
+
+              setIsOpen(false);
+            }, 100);
+          }}
+        >
+          {`Хэвлэх (Print Dialog)`}
         </button>
       </div>
       <div
