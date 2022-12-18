@@ -22,8 +22,8 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
     try {
       setIsGenerating(true);
       const response = await fetch(
-        // "https://pdf-generator-4led.onrender.com/pdf",
-        "https://app-jobsheet.garage.mn/pdf",
+        "https://pdf-generator-4led.onrender.com/pdf",
+        // "https://app-jobsheet.garage.mn/pdf",
         {
           method: "POST",
           body: JSON.stringify({ pageRanges, path }),
