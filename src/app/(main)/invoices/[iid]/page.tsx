@@ -42,7 +42,10 @@ const InvoicePage: React.FC<{ params: { iid: string } }> = ({
 
   return (
     <main id="main" className={classNames(!isOpen && "pt-10 pb-20")}>
-      <div id="pages" className="flex flex-col">
+      <div
+        id="pages"
+        className={classNames("flex flex-col", !isOpen && "gap-y-10")}
+      >
         <Invoice data={data.body} />
       </div>
       <PDFGenerator
