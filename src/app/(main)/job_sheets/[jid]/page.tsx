@@ -42,9 +42,14 @@ const JobSheetPage: React.FC<{ params: { jid: string } }> = ({
   }
 
   return (
-    <main id="main" className={classNames(!isOpen && "pt-10 pb-20")}>
+    <main
+      id="main"
+      data-testid="main"
+      className={classNames(!isOpen && "pt-10 pb-20")}
+    >
       <div
         id="pages"
+        data-testid="pages"
         className={classNames("flex flex-col", !isOpen && "gap-y-10")}
       >
         <FirstPage data={data.body} />
