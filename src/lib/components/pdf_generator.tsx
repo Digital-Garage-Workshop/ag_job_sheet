@@ -68,7 +68,7 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
               window.print();
 
               setIsOpen(false);
-            }, 100);
+            }, 500);
           }}
         >
           {`Хэвлэх (Print Dialog)`}
