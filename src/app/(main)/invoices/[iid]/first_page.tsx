@@ -1,39 +1,32 @@
 //
 import { Sheet, Table, TableHeader } from "lib/components";
-import { JobSheet } from "lib/services/schemas";
+import { Invoice } from "lib/services/schemas";
 import { classNames } from "lib/utils";
 
-interface IInvoice {
-  data: JobSheet;
+interface IFirstPage {
+  data: Invoice;
 }
-export const Invoice: React.FC<IInvoice> = ({ data }) => {
-  const mechanics = data.bookings
-    .map((booking) => booking.employee)
-    .filter(
-      (employee, index, self) =>
-        index === self.findIndex((item) => item.id === employee.id)
-    );
-
+export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
   return (
     <Sheet id="invoice" organization={data.organization}>
       <h1 className="text-center font-bold">ЗАСВАР ҮЙЛЧИЛГЭЭНИЙ НЭХЭМЖЛЭХ</h1>
       <div className="grid w-full grid-cols-2">
         {[
-          { key: "Нэхэмжлэхийн дугаар", value: "" },
-          { key: "Үйлчлүүлэгчийн нэр", value: "" },
-          { key: "Нэхэмжлэгч", value: "" },
-          { key: "Утасны дугаар", value: "" },
-          { key: "Регистрийн дугаар", value: "" },
-          { key: "Автомашины улсын дугаар", value: "" },
-          { key: "Харилцах банк", value: "" },
-          { key: "Автомашины үйлдвэрлэгч", value: "" },
-          { key: "Дансны дугаар", value: "" },
-          { key: "Автомашины загвар", value: "" },
-          { key: "Ажлын хуудасны дугаар", value: "" },
-          { key: "Автомашины арлын дугаар", value: "" },
-          { key: "Нэхэмжэх огноо", value: "" },
-          { key: "Төлбөр төлөх огноо", value: "" },
-          { key: "Төлбөл зохих нийт төлбөр", value: "" },
+          { key: "Нэхэмжлэхийн дугаар", value: data.id },
+          { key: "Үйлчлүүлэгчийн нэр", value: data.book.customer.name },
+          { key: "Нэхэмжлэгч", value: data.organization.name },
+          { key: "Утасны дугаар", value: data.book.customer.phone },
+          { key: "Регистрийн дугаар", value: data.organization.regnumber },
+          { key: "Автомашины улсын дугаар", value: data.book.carnumber },
+          { key: "Харилцах банк", value: data.organization.payment.payment },
+          { key: "Автомашины үйлдвэрлэгч", value: data.book.carmanu },
+          { key: "Дансны дугаар", value: data.organization.bankacnt },
+          { key: "Автомашины загвар", value: data.book.carmodel },
+          { key: "Ажлын хуудасны дугаар", value: data.book.id },
+          { key: "Автомашины арлын дугаар", value: data.book.vin_number },
+          { key: "Нэхэмжлэх огноо", value: data.invoicedate },
+          { key: "Төлбөр төлөх огноо", value: data.paymentdate },
+          { key: "Төлбөл зохих нийт төлбөр", value: data.total },
         ].map(({ key, value }, index) => (
           <div
             key={index}
@@ -42,7 +35,7 @@ export const Invoice: React.FC<IInvoice> = ({ data }) => {
               "even:col-start-2"
             )}
           >
-            <div className="w-7/12 text-right font-bold">{`${key}:`}</div>
+            <div className="w-7/12 shrink-0 text-right font-bold">{`${key}:`}</div>
             <div>{value}</div>
           </div>
         ))}
@@ -63,22 +56,42 @@ export const Invoice: React.FC<IInvoice> = ({ data }) => {
             <div className="text-center">Ажлын төлбөр</div>
           </th>
         </TableHeader>
-        {Array.from(Array(10)).map((_, index) => (
+        {data.book.bookings.map((booking, index) => (
           <tr key={index} className="odd:bg-gray-100">
             <th colSpan={1}>
               <div className="text-center">{index + 1}</div>
             </th>
             <th colSpan={11}>
-              <div className="text-center"></div>
+              <div className="text-center">{booking.service.category.name}</div>
             </th>
             <th colSpan={4}>
-              <div className="text-center"></div>
+              <div className="text-center">{booking.service.id}</div>
             </th>
             <th colSpan={8}>
-              <div className="text-center"></div>
+              <div className="text-center">{booking.service.price}</div>
             </th>
           </tr>
         ))}
+        {data.book.bookings.length < 10 &&
+          Array.from(Array(10 - data.book.bookings.length)).map((_, index) => (
+            <tr key={index} className="odd:bg-gray-100">
+              <th colSpan={1}>
+                <div className="text-center">
+                  {index + 1 + data.book.bookings.length}
+                </div>
+              </th>
+              <th colSpan={11}>
+                <div className="text-center"></div>
+              </th>
+              <th colSpan={4}>
+                <div className="text-center"></div>
+              </th>
+              <th colSpan={8}>
+                <div className="text-center"></div>
+              </th>
+            </tr>
+          ))}
+
         <tr>
           <th colSpan={1} className="border-none">
             <div className="text-center"></div>

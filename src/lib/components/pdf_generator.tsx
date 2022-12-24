@@ -7,6 +7,7 @@ import { useCallback, useState } from "react";
 import { classNames } from "lib/utils";
 import { usePrintDialog } from "lib/zustand";
 
+// https://gist.github.com/kettanaito/56861aff96e6debc575d522dd03e5725
 interface IPDFGenerator {
   filename?: string;
   pageRanges?: string;
@@ -24,6 +25,7 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
       const response = await fetch(
         "https://pdf-generator-4led.onrender.com/pdf",
         // "https://app-jobsheet.garage.mn/pdf",
+        // "http://localhost:3001/pdf",
         {
           method: "POST",
           body: JSON.stringify({ pageRanges, path }),

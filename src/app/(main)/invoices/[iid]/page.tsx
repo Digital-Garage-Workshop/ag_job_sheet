@@ -10,7 +10,7 @@ import { classNames } from "lib/utils";
 import { usePrintDialog } from "lib/zustand";
 
 //
-import { Invoice } from "./invoice";
+import { FirstPage } from "./first_page";
 
 const InvoicePage: React.FC<{ params: { iid: string } }> = ({
   params: { iid },
@@ -19,8 +19,8 @@ const InvoicePage: React.FC<{ params: { iid: string } }> = ({
 
   const key = iid ? `/invoices/${iid}` : null;
   const { data, error } = useSWR(key, () =>
-    client.jobSheet.getJobSheet({
-      query: { bookid: +iid },
+    client.invoice.getInvoice({
+      query: { invoiceid: +iid },
     })
   );
 
@@ -51,7 +51,7 @@ const InvoicePage: React.FC<{ params: { iid: string } }> = ({
         data-testid="pages"
         className={classNames("flex flex-col", !isOpen && "gap-y-10")}
       >
-        <Invoice data={data.body} />
+        <FirstPage data={data.body} />
       </div>
       <PDFGenerator
         filename={`invoice_#${iid}`}
