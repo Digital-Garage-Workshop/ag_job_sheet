@@ -4,6 +4,7 @@
 import { DocumentChartBarIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState } from "react";
 //
+import { pdfGenerator } from "configs/default";
 import { classNames } from "lib/utils";
 import { usePrintDialog } from "lib/zustand";
 
@@ -22,16 +23,11 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
   const _generatePDF = useCallback(async () => {
     try {
       setIsGenerating(true);
-      const response = await fetch(
-        "https://pdf-generator-4led.onrender.com/pdf",
-        // "https://app-jobsheet.garage.mn/pdf",
-        // "http://localhost:3001/pdf",
-        {
-          method: "POST",
-          body: JSON.stringify({ pageRanges, path }),
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const response = await fetch(pdfGenerator.url, {
+        method: "POST",
+        body: JSON.stringify({ pageRanges, path }),
+        headers: { "Content-Type": "application/json" },
+      });
       const pdf = await response.blob();
       const url = URL.createObjectURL(pdf);
       const a = document.createElement("a");
