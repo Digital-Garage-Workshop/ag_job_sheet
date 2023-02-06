@@ -21,11 +21,7 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
     );
 
   return (
-    <Sheet
-      id="first_page"
-      branch={data.branch}
-      organization={data.organization}
-    >
+    <Sheet id="first_page" organization={data.organization}>
       <Table>
         <tr>
           <th colSpan={6}>

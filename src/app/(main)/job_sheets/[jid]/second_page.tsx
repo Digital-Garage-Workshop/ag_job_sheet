@@ -14,11 +14,7 @@ export const SecondPage: React.FC<ISecondPage> = ({ data }) => {
     );
 
   return (
-    <Sheet
-      id="second_page"
-      branch={data.branch}
-      organization={data.organization}
-    >
+    <Sheet id="second_page" organization={data.organization}>
       <Table>
         {/* Автомашины ерөнхий үзлэгийн мэдээлэл */}
         <TableHeader>

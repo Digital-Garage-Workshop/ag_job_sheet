@@ -23,7 +23,7 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
   const _generatePDF = useCallback(async () => {
     try {
       setIsGenerating(true);
-      const response = await fetch(`${pdfGenerator.url}/pdf`, {
+      const response = await fetch(pdfGenerator.url, {
         method: "POST",
         body: JSON.stringify({ pageRanges, path }),
         headers: { "Content-Type": "application/json" },
