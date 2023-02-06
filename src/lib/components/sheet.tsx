@@ -2,12 +2,13 @@
 import type { HTMLAttributes } from "react";
 
 //
-import { Organization } from "lib/services/schemas";
+import { Branch, Organization } from "lib/services/schemas";
 
 //
 import { A4 } from "./a4";
 
 interface ISheet extends HTMLAttributes<HTMLDivElement> {
+  branch: Branch;
   organization: Organization;
 }
 export const Sheet: React.FCC<ISheet> = ({ children, id, organization }) => {
