@@ -9,9 +9,9 @@ interface IFirstPage {
   data: JobSheet;
 }
 export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
-  const createdAt = dajys(data.created_at);
-  const startedAt = dajys(data.rstart_time);
-  const endedAt = dajys(data.rend_time);
+  const createdAt = data.created_at ? dajys(data.created_at) : null;
+  const startedAt = data.rstart_time ? dajys(data.rstart_time) : null;
+  const endedAt = data.rend_time ? dajys(data.rend_time) : null;
 
   const mechanics = data.bookings
     .map((booking) => booking.employee)
@@ -44,15 +44,18 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         </tr>
         <tr>
           <th colSpan={5}>Захиалга өгсөн огноо</th>
-          {[
-            createdAt.year(),
-            createdAt.month() + 1,
-            createdAt.date(),
-            createdAt.hour(),
-            createdAt.minute(),
-            "",
-            "",
-          ].map((value, index) => (
+          {(createdAt
+            ? [
+                createdAt.year(),
+                createdAt.month() + 1,
+                createdAt.date(),
+                createdAt.hour(),
+                createdAt.minute(),
+                "",
+                "",
+              ]
+            : Array(7).fill("")
+          ).map((value, index) => (
             <td key={`${index}-${index}`}>
               {index < 5 && <div className="px-2.5">{value}</div>}
             </td>
@@ -60,15 +63,18 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         </tr>
         <tr>
           <th colSpan={5}>Засвар үйлчилгээнд орсон огноо</th>
-          {[
-            startedAt.year(),
-            startedAt.month() + 1,
-            startedAt.date(),
-            startedAt.hour(),
-            startedAt.minute(),
-            "",
-            "",
-          ].map((value, index) => (
+          {(startedAt
+            ? [
+                startedAt.year(),
+                startedAt.month() + 1,
+                startedAt.date(),
+                startedAt.hour(),
+                startedAt.minute(),
+                "",
+                "",
+              ]
+            : Array(7).fill("")
+          ).map((value, index) => (
             <td key={`${index}-${index}`}>
               {index < 5 && <div className="px-2.5">{value}</div>}
             </td>
@@ -76,15 +82,18 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         </tr>
         <tr>
           <th colSpan={5}>Засвар үйлчилгээ дууссан огноо</th>
-          {[
-            endedAt.year(),
-            endedAt.month() + 1,
-            endedAt.date(),
-            endedAt.hour(),
-            endedAt.minute(),
-            "",
-            "",
-          ].map((value, index) => (
+          {(endedAt
+            ? [
+                endedAt.year(),
+                endedAt.month() + 1,
+                endedAt.date(),
+                endedAt.hour(),
+                endedAt.minute(),
+                "",
+                "",
+              ]
+            : Array(7).fill("")
+          ).map((value, index) => (
             <td key={`${index}-${index}`}>
               {index < 5 && <div className="px-2.5">{value}</div>}
             </td>

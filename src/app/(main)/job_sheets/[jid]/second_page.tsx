@@ -61,12 +61,12 @@ export const SecondPage: React.FC<ISecondPage> = ({ data }) => {
             <th colSpan={4}>{item}</th>
             <td colSpan={2}>
               <div className="flex items-center justify-center">
-                <input type="checkbox" />
+                <input type="checkbox" checked={false} onChange={() => {}} />
               </div>
             </td>
             <td colSpan={2}>
               <div className="flex items-center justify-center">
-                <input type="checkbox" />
+                <input type="checkbox" checked={false} onChange={() => {}} />
               </div>
             </td>
             <td colSpan={4}>
