@@ -8,7 +8,11 @@ interface IFirstPage {
 }
 export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
   return (
-    <Sheet id="invoice" organization={data.organization}>
+    <Sheet
+      id="invoice"
+      organization={data.organization}
+      branch={data.book.branch}
+    >
       <h1 className="text-center font-bold">ЗАСВАР ҮЙЛЧИЛГЭЭНИЙ НЭХЭМЖЛЭХ</h1>
       <div className="grid w-full grid-cols-2">
         {[
@@ -18,7 +22,7 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
           { key: "Утасны дугаар", value: data.book.customer.phone },
           { key: "Регистрийн дугаар", value: data.organization.regnumber },
           { key: "Автомашины улсын дугаар", value: data.book.carnumber },
-          { key: "Харилцах банк", value: data.organization.payment.payment },
+          { key: "Харилцах банк", value: data.organization.payment?.payment },
           { key: "Автомашины үйлдвэрлэгч", value: data.book.carmanu },
           { key: "Дансны дугаар", value: data.organization.bankacnt },
           { key: "Автомашины загвар", value: data.book.carmodel },

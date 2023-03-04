@@ -1,4 +1,5 @@
 export { Booking } from "./booking.schema";
+export { Branch } from "./branch.schema";
 export { Customer } from "./customer.schema";
 export { Employee } from "./employee.schema";
 export { Invoice } from "./invoice.schema";

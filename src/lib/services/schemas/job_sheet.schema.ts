@@ -6,6 +6,7 @@ import { iso8601Schema } from "lib/utils";
 
 //
 import { Booking } from "./booking.schema";
+import { Branch } from "./branch.schema";
 import { Customer } from "./customer.schema";
 import { Employee } from "./employee.schema";
 import { Organization } from "./organization.schema";
@@ -38,5 +39,6 @@ export const JobSheet = z.object({
   createuser: Employee,
   bookings: Booking.array(),
   customer: Customer,
+  branch: Branch,
 });
 export type JobSheet = z.infer<typeof JobSheet>;

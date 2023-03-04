@@ -6,6 +6,7 @@ import { iso8601Schema } from "lib/utils";
 
 //
 import { Booking } from "./booking.schema";
+import { Branch } from "./branch.schema";
 import { Customer } from "./customer.schema";
 import { Employee } from "./employee.schema";
 import { Organization } from "./organization.schema";
@@ -53,6 +54,7 @@ export const Invoice = z.object({
     updated_at: iso8601Schema,
     customer: Customer,
     bookings: Booking.array(),
+    branch: Branch,
   }),
 });
 export type Invoice = z.infer<typeof Invoice>;
