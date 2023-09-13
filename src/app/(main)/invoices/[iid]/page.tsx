@@ -30,7 +30,11 @@ const InvoicePage: React.Page<{ iid: string }> = ({ params: { iid } }) => {
   }
 
   if (data?.status !== 200) {
-    return <ErrorComponent message={JSON.stringify(data?.body)} />;
+    return (
+      <ErrorComponent
+        message={`${data?.status}: ${JSON.stringify(data?.body)}`}
+      />
+    );
   }
 
   return (
