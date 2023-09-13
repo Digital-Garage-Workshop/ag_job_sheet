@@ -4,6 +4,7 @@
 import useSWR from "swr";
 
 //
+import { ErrorComponent, Loader } from "lib/components";
 import { PDFGenerator } from "lib/components/client_index";
 import { client } from "lib/services";
 import { classNames } from "lib/utils";
@@ -12,46 +13,38 @@ import { usePrintDialog } from "lib/zustand";
 //
 import { FirstPage } from "./first_page";
 
-const InvoicePage: React.FC<{ params: { iid: string } }> = ({
-  params: { iid },
-}) => {
+const InvoicePage: React.Page<{ iid: string }> = ({ params: { iid } }) => {
   const isOpen = usePrintDialog((state) => state.isOpen);
 
   const key = iid ? `/invoices/${iid}` : null;
   const { data, isLoading } = useSWR(key, () =>
     client.invoice.getInvoice({
-      query: { invoiceid: +iid },
-    })
+      params: {
+        id: iid,
+      },
+    }),
   );
 
   if (isLoading) {
-    return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        Loading
-      </div>
-    );
+    return <Loader />;
   }
 
   if (data?.status !== 200) {
-    return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        <p>{JSON.stringify(data?.body)}</p>
-      </div>
-    );
+    return <ErrorComponent message={JSON.stringify(data?.body)} />;
   }
 
   return (
     <main
       id="main"
       data-testid="main"
-      className={classNames(!isOpen && "pt-10 pb-20")}
+      className={classNames(!isOpen && "pb-20 pt-10")}
     >
       <div
         id="pages"
         data-testid="pages"
         className={classNames("flex flex-col", !isOpen && "gap-y-10")}
       >
-        <FirstPage data={data.body} />
+        <FirstPage data={data.body.data} />
       </div>
       <PDFGenerator
         filename={`invoice_#${iid}`}

@@ -10,12 +10,11 @@ import { c } from "./contract";
 export const jobSheetContract = c.router({
   getJobSheet: {
     method: "GET",
-    path: "/job",
-    query: z.object({
-      bookid: z.number(),
-    }),
+    path: "/booking/:id",
     responses: {
-      200: JobSheet,
+      200: z.object({
+        data: JobSheet,
+      }),
     },
   },
 });

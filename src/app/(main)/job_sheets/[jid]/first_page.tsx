@@ -9,16 +9,21 @@ interface IFirstPage {
   data: JobSheet;
 }
 export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
-  const createdAt = data.created_at ? dajys(data.created_at) : null;
-  const startedAt = data.rstart_time ? dajys(data.rstart_time) : null;
-  const endedAt = data.rend_time ? dajys(data.rend_time) : null;
+  // const createdAt = data.created_at ? dajys(data.created_at) : null;
+  const createdAt = dajys(new Date());
+  const startedAt = data.starttime ? dajys(data.starttime) : null;
+  const endedAt = data.endtime ? dajys(data.endtime) : null;
 
   const mechanics = data.bookings
-    .map((booking) => booking.employee)
+    .map((booking) => booking.mechanic)
     .filter(
-      (employee, index, self) =>
-        index === self.findIndex((item) => item.id === employee.id)
+      (mechanic, index, self) =>
+        index === self.findIndex((item) => item.name === mechanic.name),
     );
+
+  const changeParts = data.bookings
+    .map(({ changepart }) => changepart)
+    .filter(Boolean);
 
   return (
     <Sheet
@@ -124,7 +129,7 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
               <td colSpan={4} key={index}>
                 <div className="px-2.5">{value}</div>
               </td>
-            )
+            ),
           )}
         </tr>
         <tr>
@@ -144,7 +149,7 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
               <td colSpan={4} key={index}>
                 <div className="px-2.5">{value}</div>
               </td>
-            )
+            ),
           )}
         </tr>
         {/* Үйлчлүүлэгчийн тайлбар/хийгдэх ажил */}
@@ -176,24 +181,15 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
             <div className="px-2.5">
               {data.bookings
                 .map(
-                  ({ categoryservice, service }) =>
-                    `${service.category.name} ${
-                      categoryservice?.name ? `: ${categoryservice.name}` : ""
-                    }`
+                  ({ category, subcategory }) =>
+                    `${category.name}${
+                      subcategory?.name ? `: ${subcategory.name}` : ""
+                    }`,
                 )
                 .join(", ")}
             </div>
           </td>
         </tr>
-        {/* {data.bookings.map(({ categoryservice, service }, index) => (
-          <tr key={index}>
-            <td colSpan={12}>
-              <div className="px-2.5">{`${service.category.name}: ${
-                categoryservice?.name ?? ""
-              }`}</div>
-            </td>
-          </tr>
-        ))} */}
         {/* Автомашины бүрэн бүтэн байдал */}
         <TableHeader>
           <th colSpan={5}>Автомашины бүрэн бүтэн байдал</th>
@@ -230,7 +226,9 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         <tr>
           <th colSpan={7}>
             {`Хүлээн авсан зөвлөх: `}
-            <span className="font-normal">{data.createuser.name}</span>
+            <span className="font-normal">
+              {data.bookings.find(Boolean)?.createuser.name}
+            </span>
           </th>
         </tr>
         <tr>
@@ -260,7 +258,7 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
           <tr key={index}>
             <td colSpan={12}>
               <div className="px-2.5">
-                {data.bookings.filter((booking) => booking.rnote)[index]?.rnote}
+                {data.bookings.filter((booking) => booking.note)[index]?.note}
               </div>
             </td>
           </tr>
@@ -292,12 +290,7 @@ export const FirstPage: React.FC<IFirstPage> = ({ data }) => {
         {Array.from(Array(6)).map((_, index) => (
           <tr key={index}>
             <td colSpan={12}>
-              <div className="px-2.5">
-                {
-                  data.bookings.filter((booking) => booking.comment)[index]
-                    ?.comment
-                }
-              </div>
+              <div className="px-2.5">{changeParts[index]}</div>
             </td>
           </tr>
         ))}

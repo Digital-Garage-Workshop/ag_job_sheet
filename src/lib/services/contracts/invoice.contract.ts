@@ -10,12 +10,11 @@ import { c } from "./contract";
 export const invoiceContract = c.router({
   getInvoice: {
     method: "GET",
-    path: "/invoice",
-    query: z.object({
-      invoiceid: z.number(),
-    }),
+    path: "/invoice/:id",
     responses: {
-      200: Invoice,
+      200: z.object({
+        data: Invoice,
+      }),
     },
   },
 });

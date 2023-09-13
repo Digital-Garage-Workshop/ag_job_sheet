@@ -1,7 +1,7 @@
 "use client";
 
 //
-import { DocumentChartBarIcon } from "@heroicons/react/24/solid";
+import { Loader2Icon } from "lucide-react";
 import { useCallback, useState } from "react";
 //
 import { pdfGenerator } from "configs/default";
@@ -37,7 +37,7 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
       a.click();
       a.remove();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsGenerating(false);
     }
@@ -50,8 +50,8 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
     <>
       <div
         className={classNames(
-          "fixed left-0 right-0 bottom-0 flex gap-x-2.5 bg-gray-400 px-10 py-2.5",
-          isOpen && "invisible"
+          "fixed bottom-0 left-0 right-0 flex gap-x-2.5 bg-gray-400 px-10 py-2.5",
+          isOpen && "invisible",
         )}
         data-testid="pdf_generator"
       >
@@ -75,12 +75,10 @@ export const PDFGenerator: React.FC<IPDFGenerator> = ({
       <div
         className={classNames(
           "absolute inset-0 flex items-center justify-center bg-black/50 duration-500",
-          !isGenerating && "invisible opacity-0"
+          !isGenerating && "invisible opacity-0",
         )}
       >
-        <div className="animate-bounce">
-          <DocumentChartBarIcon className="h-10 w-10 text-white" />
-        </div>
+        <Loader2Icon className="h-10 w-10 animate-spin text-white" />
       </div>
     </>
   );

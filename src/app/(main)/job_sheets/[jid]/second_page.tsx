@@ -7,10 +7,10 @@ interface ISecondPage {
 }
 export const SecondPage: React.FC<ISecondPage> = ({ data }) => {
   const mechanics = data.bookings
-    .map((booking) => booking.employee)
+    .map((booking) => booking.mechanic)
     .filter(
       (employee, index, self) =>
-        index === self.findIndex((item) => item.id === employee.id)
+        index === self.findIndex((item) => item.name === employee.name),
     );
 
   return (
@@ -85,7 +85,7 @@ export const SecondPage: React.FC<ISecondPage> = ({ data }) => {
         {Array.from(Array(12)).map((_, index) => (
           <tr key={index}>
             <td colSpan={12}>
-              <div className="px-2.5">{data.bookings[index]?.rnotes}</div>
+              <div className="px-2.5">{data.bookings[index]?.note}</div>
             </td>
           </tr>
         ))}

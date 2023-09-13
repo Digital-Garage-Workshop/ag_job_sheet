@@ -4,6 +4,7 @@
 import useSWR from "swr";
 
 //
+import { ErrorComponent, Loader } from "lib/components";
 import { PDFGenerator } from "lib/components/client_index";
 import { client } from "lib/services";
 import { classNames } from "lib/utils";
@@ -13,47 +14,37 @@ import { usePrintDialog } from "lib/zustand";
 import { FirstPage } from "./first_page";
 import { SecondPage } from "./second_page";
 
-const JobSheetPage: React.FC<{ params: { jid: string } }> = ({
-  params: { jid },
-}) => {
+const JobSheetPage: React.Page<{ jid: string }> = ({ params: { jid } }) => {
   const isOpen = usePrintDialog((state) => state.isOpen);
 
   const key = jid ? `/job_sheets/${jid}` : null;
   const { data, isLoading } = useSWR(key, () =>
     client.jobSheet.getJobSheet({
-      query: { bookid: +jid },
-    })
+      params: { id: jid },
+    }),
   );
 
   if (isLoading) {
-    return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        Loading
-      </div>
-    );
+    return <Loader />;
   }
 
   if (data?.status !== 200) {
-    return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        <p>{JSON.stringify(data?.body)}</p>
-      </div>
-    );
+    return <ErrorComponent message={JSON.stringify(data?.body)} />;
   }
 
   return (
     <main
       id="main"
       data-testid="main"
-      className={classNames(!isOpen && "pt-10 pb-20")}
+      className={classNames(!isOpen && "pb-20 pt-10")}
     >
       <div
         id="pages"
         data-testid="pages"
         className={classNames("flex flex-col", !isOpen && "gap-y-10")}
       >
-        <FirstPage data={data.body} />
-        <SecondPage data={data.body} />
+        <FirstPage data={data.body.data} />
+        <SecondPage data={data.body.data} />
       </div>
       <PDFGenerator
         filename={`job_sheet_#${jid}`}

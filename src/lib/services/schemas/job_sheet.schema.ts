@@ -2,43 +2,30 @@
 import { z } from "zod";
 
 //
-import { iso8601Schema } from "lib/utils";
-
-//
 import { Booking } from "./booking.schema";
 import { Branch } from "./branch.schema";
 import { Customer } from "./customer.schema";
-import { Employee } from "./employee.schema";
 import { Organization } from "./organization.schema";
-import { Warehouse } from "./warehouse.schema";
 
 export const JobSheet = z.object({
   id: z.number(),
-  suser_id: z.number(),
   carnumber: z.string(),
-  phone_number: z.string(),
-  vin_number: z.string(),
   carmanu: z.string(),
   carmodel: z.string(),
+  vin_number: z.string(),
   buildyear: z.number(),
   capacity: z.number(),
-  kilometr: z.number(),
+  fueltype: z.string(),
+  kilometr: z.number().nullable(),
+  kilotype: z.string().nullable(),
+  phonenumber: z.string(),
   comment: z.string().nullable(),
-  booking_date: iso8601Schema,
-  organization_id: z.number(),
-  ap_warehouse_id: z.number(),
-  user_id: z.number(),
-  bstatus: z.enum(["confirmed"]),
-  rstatus: z.number(),
-  rstart_time: iso8601Schema.nullable(),
-  rend_time: iso8601Schema.nullable(),
-  created_at: iso8601Schema,
-  updated_at: iso8601Schema,
-  organization: Organization,
-  warehouse: Warehouse,
-  createuser: Employee,
-  bookings: Booking.array(),
+  starttime: z.string().nullable(),
+  endtime: z.string().nullable(),
+  totalamount: z.string(),
   customer: Customer,
+  bookings: Booking.array(),
+  organization: Organization,
   branch: Branch,
 });
 export type JobSheet = z.infer<typeof JobSheet>;

@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 
+import { ErrorComponent } from "lib/components";
+
 const ErrorPage: React.FC<{ error: Error; reset: () => void }> = ({
   error,
 }) => {
@@ -9,10 +11,6 @@ const ErrorPage: React.FC<{ error: Error; reset: () => void }> = ({
     console.error(error);
   }, [error]);
 
-  return (
-    <div className="flex h-screen w-screen items-center justify-center">
-      <p>{error.message}</p>
-    </div>
-  );
+  return <ErrorComponent message={error.message} />;
 };
 export default ErrorPage;
