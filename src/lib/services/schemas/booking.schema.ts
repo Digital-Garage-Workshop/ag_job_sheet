@@ -34,5 +34,6 @@ export const Booking = z.object({
     .array(),
   note: z.string().nullable(),
   changepart: z.string().nullable(),
+  totalamountofpart: z.number(),
 });
 export type Booking = z.infer<typeof Booking>;
