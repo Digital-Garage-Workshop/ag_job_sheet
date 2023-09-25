@@ -27,5 +27,6 @@ export const Invoice = z.object({
   bookings: Booking.array(),
   organization: Organization,
   branch: Branch,
+  
 });
 export type Invoice = z.infer<typeof Invoice>;
