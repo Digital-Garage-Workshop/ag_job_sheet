@@ -1,5 +1,5 @@
 //
-import { initClient,tsRestFetchApi } from "@ts-rest/core";
+import { initClient, tsRestFetchApi } from "@ts-rest/core";
 
 //
 import { backend } from "configs/default";

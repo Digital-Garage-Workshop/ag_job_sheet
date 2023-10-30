@@ -2,7 +2,7 @@
 import "./globals.css";
 
 //
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Roboto } from "next/font/google";
 
 export const metadata: Metadata = {
@@ -12,11 +12,12 @@ export const metadata: Metadata = {
     default: "Garage",
     template: "%sGarage",
   },
-  viewport: {
-    initialScale: 1,
-    width: "device-width",
-  },
 };
+export const viewport: Viewport = {
+  initialScale: 1,
+  width: "device-width",
+};
+
 const roboto = Roboto({
   subsets: ["cyrillic", "cyrillic-ext", "latin"],
   weight: ["100", "300", "400", "500", "700", "900"],
